@@ -1,0 +1,31 @@
+Day 1:
+    Brainstorm + Finalize game choice + plot
+
+Day 2:
+    Code mechanics with no graphics
+
+Day 3:
+    Start drawing graphics
+
+Day 6:
+    Create and embed Audio
+
+Day 7:
+    Build and deploy
+
+
+Setting 
+- Haunted Hotel
+- Innocent customer staying at hotel
+
+Priorities:
+.Navigable Top Down Maze
+.Design
+.Basic Structure
+.mechanics - Fog/Low Light system (SEMI-DONE)
+.Playable prototype
+.Plot
+.Spooky Elements
+.
+.Level Design
+.Menus 
