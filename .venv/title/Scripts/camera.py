@@ -13,6 +13,11 @@ class Camera(pg.sprite.Sprite):
         pg.draw.circle(self.image,(255,255,255,50),self.rect.center,self.w//2)
         pg.draw.circle(self.image,(255,255,255,150),self.rect.center,self.w//3)
         pg.draw.circle(self.image,(255,255,255,200),self.rect.center,self.w//4)
+        self.pos = pg.math.Vector2(self.rect.center)
+    
+    def apply(self,center):
+        self.pos = self.pos.lerp(center,CAMERA_LERP_SPEED)
+        self.rect.center = self.pos
 
     
 

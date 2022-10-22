@@ -19,11 +19,11 @@ Setting
 - Innocent customer staying at hotel
 
 Priorities:
-
-.Collectibles . Walls
-.Navigable Top Down Maze
-.Design
-.Basic Structure
+.Smooth Movement
+.Make walls unwalkable
+.Collectibles
+.Navigable Top Down Maze (SEMI-DONE)
+.Basic Structure (SEMI-DONE)
 .mechanics - Fog/Low Light system (SEMI-DONE)
 .Playable prototype
 .Plot
@@ -31,3 +31,8 @@ Priorities:
 .
 .Level Design
 .Menus 
+
+
+DONE STUFF
+.Player and Walk cycle
+.Floor and Wall tiles
