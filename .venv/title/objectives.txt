@@ -19,6 +19,8 @@ Setting
 - Innocent customer staying at hotel
 
 Priorities:
+
+.Collectibles . Walls
 .Navigable Top Down Maze
 .Design
 .Basic Structure

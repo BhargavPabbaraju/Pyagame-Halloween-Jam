@@ -3,8 +3,8 @@ from settings import *
 class Camera(pg.sprite.Sprite):
     def __init__(self,):
         super().__init__()
-        self.w = CAMERA_SIZE[0]
-        self.h = CAMERA_SIZE[1]
+        self.w = CAMERA_OFFSET[0]+PLAYER_SIZE[0]
+        self.h = CAMERA_OFFSET[1]+PLAYER_SIZE[1]
 
         surf = pg.Surface((self.w,self.h),pg.SRCALPHA)
         #surf.fill((255,255,255))
