@@ -16,13 +16,24 @@ Day 7:
 
 Setting 
 - Haunted Hotel
-- Innocent customer staying at hotel
+- Hotel staff trying to figure out missing customers
+
+
+Stuff to draw
+-Mirror tiles
+-Table tiles
+-Plant tiles
+-Corpses
+-Skeletons
+-Portraits
 
 Priorities:
-.Smooth Movement
-.Make walls unwalkable
+.Count time
+.If time greater than threshold(random) , fill with blood and kill player
+.Make Door auto lock
+.Display Door Locked message
+.Make flashlight work
 .Collectibles
-.Navigable Top Down Maze (SEMI-DONE)
 .Basic Structure (SEMI-DONE)
 .mechanics - Fog/Low Light system (SEMI-DONE)
 .Playable prototype
@@ -36,3 +47,7 @@ Priorities:
 DONE STUFF
 .Player and Walk cycle
 .Floor and Wall tiles
+.Wall collisions 
+.Bathroom tiles
+.Smooth movement
+.Smooth Screen transition
