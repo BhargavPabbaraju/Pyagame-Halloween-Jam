@@ -1,5 +1,6 @@
 from settings import *
 from player import Player
+from text import Textbox
 from leveleditor import Level
 
 
@@ -18,6 +19,7 @@ class Game:
         self.fade_out = True
         self.has_key = False
         self.opened_doors=[]
+        
     
 
     def new_level(self,lvl=1,cords=None):
@@ -25,6 +27,8 @@ class Game:
         self.all_sprites = pg.sprite.Group()
         self.player_sprite = pg.sprite.Group()
         self.camera = pg.sprite.Group()
+        self.textbox = Textbox()
+        
 
         self.level = Level(lvl)
         for collec in self.level.collectibles:
@@ -54,6 +58,8 @@ class Game:
             self.camera.draw(self.screen)
         
         self.player_sprite.draw(self.screen)
+        self.textbox.update()
+        self.screen.blit(self.textbox.image,self.textbox.rect)
         
 
         if self.debug:

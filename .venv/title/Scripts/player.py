@@ -85,7 +85,8 @@ class Player(pg.sprite.Sprite):
             for door in self.game.level.doors:
                 if pg.Rect.colliderect(door.rect,self.rect):
                     if door.door in self.game.opened_doors:
-                        print("door permanently locked.")
+                        self.game.textbox.active = True
+                        self.game.textbox.change_text("This door is permanently locked.")
                     elif not door.locked:
                         self.open_door(door)
                         self.game.opened_doors.append(door.door)

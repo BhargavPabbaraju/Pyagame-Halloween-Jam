@@ -28,9 +28,9 @@ Stuff to draw
 -Portraits
 
 Priorities:
+.Display Door Locking message
 .Count time
 .If time greater than threshold(random) , fill with blood and kill player
-.Make Door auto lock
 .Display Door Locked message
 .Make flashlight work
 .Collectibles
