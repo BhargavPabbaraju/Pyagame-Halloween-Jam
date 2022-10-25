@@ -17,6 +17,7 @@ class Game:
         self.new_level()
         self.fade_out = True
         self.has_key = False
+        self.opened_doors=[]
     
 
     def new_level(self,lvl=1,cords=None):

@@ -51,3 +51,4 @@ DONE STUFF
 .Bathroom tiles
 .Smooth movement
 .Smooth Screen transition
+.Collectibles are collectable

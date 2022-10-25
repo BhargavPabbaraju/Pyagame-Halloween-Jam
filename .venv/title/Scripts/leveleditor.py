@@ -70,6 +70,7 @@ class Door(pg.sprite.Sprite):
         self.to_level = door[2]
         self.to_cords = (door[3],door[4])
         self.locked = door[5]
+        self.door = door
         
 
 

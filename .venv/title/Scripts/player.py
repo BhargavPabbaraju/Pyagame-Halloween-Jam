@@ -84,11 +84,15 @@ class Player(pg.sprite.Sprite):
         if direction[(dx,dy)] == 'U':
             for door in self.game.level.doors:
                 if pg.Rect.colliderect(door.rect,self.rect):
-                    if not door.locked:
+                    if door.door in self.game.opened_doors:
+                        print("door permanently locked.")
+                    elif not door.locked:
                         self.open_door(door)
+                        self.game.opened_doors.append(door.door)
                     elif self.game.has_key:
                         self.game.has_key = False
                         self.open_door(door)
+                        self.game.opened_doors.append(door.door)
                     else:
                         print("door locked")
         
