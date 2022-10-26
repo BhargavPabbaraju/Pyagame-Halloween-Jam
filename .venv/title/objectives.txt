@@ -28,17 +28,9 @@ Stuff to draw
 -Portraits
 
 Priorities:
-.Start Menu
-.Make flashlight work
-.Collectibles
-.Basic Structure (SEMI-DONE)
-.mechanics - Fog/Low Light system (SEMI-DONE)
-.Playable prototype
-.Plot
-.Spooky Elements
-.
 .Level Design
-.Menus 
+.Title Screen
+.Sounds
 
 
 DONE STUFF

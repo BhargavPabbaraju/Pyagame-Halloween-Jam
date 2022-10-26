@@ -83,10 +83,14 @@ class OptionText(pg.sprite.Sprite):
             pg.quit()
             quit()
         
-        elif self.option == 'PLAY AGAIN':
+        elif self.option == 'PLAY AGAIN' or self.option == 'PLAY':
             self.game.over_running = False
             self.game.game_running = True
-            self.game.new_level(self.game.level.no)
+            if self.option=='PLAY':
+                self.game.new_level()
+            else:
+                self.game.new_level(self.game.level.no)
             self.game.run()
-            
+        
+        
         

@@ -63,6 +63,7 @@ class Level:
 
     def timeout(self,game):
         if self.event_type == 'DIE':
+            
             game.shake_screen()
             game.game_over(["YOU WERE SLASHED", "INTO PIECES!"])
 

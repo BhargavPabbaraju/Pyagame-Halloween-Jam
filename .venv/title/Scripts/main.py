@@ -15,12 +15,14 @@ class Game:
         self.debug = False
         self.window = pg.display.set_mode((WIDTH,HEIGHT))
         self.clock = pg.time.Clock()
-        self.new_level()
+        
         self.fade_out = True
         self.has_key = False
         self.opened_doors=[]
-        self.game_running = True
+        self.game_running = False
         self.over_running = False
+        self.menu_running = True
+        
         
     
 
@@ -177,7 +179,7 @@ class Game:
         return surf
     
     def display_options(self,options):
-        
+        self.options = pg.sprite.Group()
         for i in range(2):
             color = (255,0,0) if options[i] =='QUIT' else (255,255,255)
             self.options.add(OptionText(options[i],color,i,self))
@@ -187,9 +189,11 @@ class Game:
         self.player_sprite.update()
         self.draw_screen()
         pg.time.delay(200)
-        self.options = pg.sprite.Group()
+        
         surf = self.display_game_over_text(msg)
         self.display_options(["QUIT","PLAY AGAIN"])
+        
+        
 
         while self.over_running:
             for event in pg.event.get():
@@ -201,6 +205,7 @@ class Game:
             self.display_window()
             self.window.blit(surf,(0,0))
             self.options.update()
+            self.window.blit(pg.Surface((320*2,48*2)),(0,320*2-48*2))
             self.options.draw(self.window)
             pg.display.flip()
 
@@ -221,13 +226,26 @@ class Game:
             self.display_window()
             pg.display.update()
     
+    def menu_loop(self):
+        self.display_options(["PLAY","QUIT"])
+        while self.menu_running:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    pg.quit()
+                    quit()
 
+            
+            self.display_window()
+            self.options.update()
+            self.options.draw(self.window)
+            
+            pg.display.flip()
 
 
 
 
 game = Game()
-game.run()
+game.menu_loop()
                 
             
     
