@@ -1,6 +1,6 @@
 from settings import *
 from player import Player
-from text import Textbox
+from text import Textbox,OptionText
 from leveleditor import Level
 from math import sin,cos
 
@@ -19,6 +19,8 @@ class Game:
         self.fade_out = True
         self.has_key = False
         self.opened_doors=[]
+        self.game_running = True
+        self.over_running = False
         
     
 
@@ -141,20 +143,71 @@ class Game:
             pg.time.delay(50)
 
     
-    def game_over(self):
-        self.textbox.active = True
-        self.textbox.change_text("GAME OVER!")
-        self.textbox.last_update = pg.time.get_ticks()
+    def game_over(self,msg):
+        self.game_running = False
+        self.over_running = True
+        self.game_over_loop(msg)
 
     def event_checks(self):
         if self.level.time_passed():
             self.level.timeout(self)
+
+    
+    def display_game_over_text(self,msg):
+        font = pg.font.Font(FONTFILE,GAMEOVERFONTSIZE)
+        surf = pg.Surface((WIDTH,HEIGHT),pg.SRCALPHA)
+        surf.fill((100,100,100,10))
+        surfs=[]
+        n=len(msg)
+        for i in range(n):
+            text = font.render(msg[i],True,(138,3,3))
+            rect = text.get_rect()
+            rect.center = surf.get_rect().center
+            if n%2==1 and i==n/2:
+                surf.blit(text,rect)
+            else:
+                if i<n/2:
+                    rect.y-=GAMEOVERFONTSIZE//n
+                else:
+                    rect.y+=GAMEOVERFONTSIZE//n
+                
+                surf.blit(text,rect)
+        
+        
+        return surf
+    
+    def display_options(self,options):
+        
+        for i in range(2):
+            color = (255,0,0) if options[i] =='QUIT' else (255,255,255)
+            self.options.add(OptionText(options[i],color,i,self))
+        
+    def game_over_loop(self,msg):
+        self.player.die()
+        self.player_sprite.update()
+        self.draw_screen()
+        pg.time.delay(200)
+        self.options = pg.sprite.Group()
+        surf = self.display_game_over_text(msg)
+        self.display_options(["QUIT","PLAY AGAIN"])
+
+        while self.over_running:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    pg.quit()
+                    quit()
             
+
+            self.display_window()
+            self.window.blit(surf,(0,0))
+            self.options.update()
+            self.options.draw(self.window)
+            pg.display.flip()
 
     def run(self):
         
 
-        while True:
+        while self.game_running:
             self.dt = self.clock.tick(FPS)/1000
             for event in pg.event.get():
                 if event.type == pg.QUIT:

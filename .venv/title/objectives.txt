@@ -28,7 +28,6 @@ Stuff to draw
 -Portraits
 
 Priorities:
-.Game Over screen
 .Start Menu
 .Make flashlight work
 .Collectibles

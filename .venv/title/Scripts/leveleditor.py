@@ -19,7 +19,7 @@ class Level:
         self.make_level()
         self.last_update = pg.time.get_ticks()
         self.threshold = 1000 * randint(self.min_thres,self.max_thres)
-        print(self.threshold)
+
         
 
 
@@ -64,9 +64,7 @@ class Level:
     def timeout(self,game):
         if self.event_type == 'DIE':
             game.shake_screen()
-            game.player.die()
-            pg.time.delay(200)
-            game.game_over()
+            game.game_over(["YOU WERE SLASHED", "INTO PIECES!"])
 
         elif self.event_type=='BLOOD':
             game.bg=pg.image.load(BGIMAGE+'%d_blood.png'%self.no).convert_alpha()
@@ -91,7 +89,7 @@ class Wall(pg.sprite.Sprite):
         
         self.pos = pos[0]*w ,pos[1]*h
         self.rect.topleft = self.pos
-        #print(self.rect)
+
 
 
 class Door(pg.sprite.Sprite):
