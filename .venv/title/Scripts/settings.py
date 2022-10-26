@@ -14,6 +14,8 @@ PLAYER_LERP_SPEED = 0.5
 
 FPS = 60
 
+FONTSIZE = 26
+
 
 FOG_COLOR = (0,0,0)
 
@@ -21,7 +23,7 @@ FOG_COLOR = (0,0,0)
 BGIMAGE = ".venv\\title\Images\\level"
 TEXTBOXIMG = '.venv\\title\Images\\textbox.png'
 FONTFILE = '.venv\\title\who asks satan.ttf'
-FONTSIZE = 26
+
 
 
 pg.display.set_mode((WIDTH,HEIGHT))

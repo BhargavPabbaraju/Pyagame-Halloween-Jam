@@ -28,10 +28,8 @@ Stuff to draw
 -Portraits
 
 Priorities:
-.Display Door Locking message
-.Count time
-.If time greater than threshold(random) , fill with blood and kill player
-.Display Door Locked message
+.Game Over screen
+.Start Menu
 .Make flashlight work
 .Collectibles
 .Basic Structure (SEMI-DONE)
@@ -52,3 +50,4 @@ DONE STUFF
 .Smooth movement
 .Smooth Screen transition
 .Collectibles are collectable
+.Time Based Events

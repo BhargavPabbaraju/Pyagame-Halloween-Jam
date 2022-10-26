@@ -6,12 +6,7 @@ player_sheet = Spritesheet(".venv\\title\Images\player.png")
 class Player(pg.sprite.Sprite):
     def __init__(self,game,x=1,y=4,speed=320,update_speed=100):
         super().__init__()
-        self.images = {'U':[],'D':[],'L':[],'R':[]}
-        r=0
-        for i in 'ULRD':
-            for j in range(4):
-                self.images[i].append(player_sheet.get_sprite(r,j,*PLAYER_SIZE))
-            r+=1
+        self.get_images(player_sheet)
 
         self.image = self.images['D'][0]
         self.rect = self.image.get_rect()
@@ -30,6 +25,17 @@ class Player(pg.sprite.Sprite):
         self.turn = 0
         
         self.target = self.pos
+
+    
+    def get_images(self,sheet):
+        self.images = {'U':[],'D':[],'L':[],'R':[]}
+        r=0
+        for i in 'ULRD':
+            for j in range(4):
+                self.images[i].append(sheet.get_sprite(r,j,*PLAYER_SIZE))
+            r+=1
+        
+
         
     
     def change_image(self,direction):
@@ -87,6 +93,7 @@ class Player(pg.sprite.Sprite):
                     if door.door in self.game.opened_doors:
                         self.game.textbox.active = True
                         self.game.textbox.change_text("This door is permanently locked.")
+                        self.game.textbox.last_update = pg.time.get_ticks()
                     elif not door.locked:
                         self.open_door(door)
                         self.game.opened_doors.append(door.door)
@@ -95,7 +102,9 @@ class Player(pg.sprite.Sprite):
                         self.open_door(door)
                         self.game.opened_doors.append(door.door)
                     else:
-                        print("door locked")
+                        self.game.textbox.active = True
+                        self.game.textbox.change_text("You need a key to open this door.")
+                        self.game.textbox.last_update = pg.time.get_ticks()
         
 
         for collec in self.game.level.collectibles:
@@ -111,6 +120,11 @@ class Player(pg.sprite.Sprite):
         self.game.fade()
         self.game.new_level(door.to_level,door.to_cords)
         self.kill()
+    
+
+    def die(self):
+        sheet = Spritesheet(".venv\\title\Images\player blood.png")
+        self.get_images(sheet)
         
         
         

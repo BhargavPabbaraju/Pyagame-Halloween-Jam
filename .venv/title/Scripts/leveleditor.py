@@ -3,7 +3,7 @@
 from tkinter import W
 from settings import *
 from spritesheet import Spritesheet
-
+from random import randint
 
 path = '.venv\\title\Data\level'
 
@@ -15,7 +15,11 @@ class Level:
         self.collectibles = pg.sprite.Group()
         self.no = no
         self.playercords=(0,0)
+        self.event_type = None
         self.make_level()
+        self.last_update = pg.time.get_ticks()
+        self.threshold = 1000 * randint(self.min_thres,self.max_thres)
+        print(self.threshold)
         
 
 
@@ -33,18 +37,48 @@ class Level:
                     for wall in walls:
                         w = Wall(wall)
                         self.walls.add(w)
-                elif n==5: # Doors
+                elif n==5: # Events
+                    event = eval(lines[n])
+                    self.event_type = event[0]
+                    self.min_thres = event[1]
+                    self.max_thres = event[2]
+                elif n==7: # Doors
                     doors = eval(lines[n])
                     for door in doors:
                         d = Door(door)
                         self.doors.add(d)
                 
-                elif n==7: #Collectibles
+                elif n==9: #Collectibles
                     collecs = eval(lines[n])
                     for collec in collecs:
                         c = Collectible(collec)
                         self.collectibles.add(c)
 
+    def time_passed(self):
+        now = pg.time.get_ticks()
+        if now - self.last_update > self.threshold:
+            self.last_update = now
+            return True
+    
+
+    def timeout(self,game):
+        if self.event_type == 'DIE':
+            game.shake_screen()
+            game.player.die()
+            pg.time.delay(200)
+            game.game_over()
+
+        elif self.event_type=='BLOOD':
+            game.bg=pg.image.load(BGIMAGE+'%d_blood.png'%self.no).convert_alpha()
+            self.event_type='DIE'
+            
+            game.shake_screen()
+            game.fade()
+            self.last_update = pg.time.get_ticks()
+            self.threshold = 1000 * randint(self.min_thres,self.max_thres)
+        
+
+        
                    
 
 

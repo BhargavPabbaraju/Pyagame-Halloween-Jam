@@ -2,7 +2,7 @@ from settings import *
 from player import Player
 from text import Textbox
 from leveleditor import Level
-
+from math import sin,cos
 
 
 
@@ -49,6 +49,7 @@ class Game:
         
         
         self.all_sprites.draw(self.screen)
+        
 
         if not self.debug:
             self.fog.fill(FOG_COLOR)
@@ -125,8 +126,29 @@ class Game:
 
         
         
+    def shake_screen(self):
+        numberOfShakes = 20
+        surf =  pg.transform.scale(self.screen,(WIDTH,HEIGHT))
+        for i in range(numberOfShakes):
+            speed = 10
+            x=cos(pg.time.get_ticks()) * speed
+            y=sin(pg.time.get_ticks()) * speed
+            self.window.fill(1)
+            self.window.blit(surf,(x,y))
+            pg.display.flip()
+            self.window.fill(1)
+            self.window.blit(surf,(0,0))
+            pg.time.delay(50)
 
-        
+    
+    def game_over(self):
+        self.textbox.active = True
+        self.textbox.change_text("GAME OVER!")
+        self.textbox.last_update = pg.time.get_ticks()
+
+    def event_checks(self):
+        if self.level.time_passed():
+            self.level.timeout(self)
             
 
     def run(self):
@@ -140,11 +162,14 @@ class Game:
                     quit()
 
             
+            self.event_checks()
             self.player_sprite.update()
             self.draw_screen()
             self.display_window()
             pg.display.update()
     
+
+
 
 
 
