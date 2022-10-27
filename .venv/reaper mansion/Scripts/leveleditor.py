@@ -5,7 +5,7 @@ from settings import *
 from spritesheet import Spritesheet
 from random import randint
 
-path = '.venv\\title\Data\level'
+path = '.venv\\reaper mansion\Data\level'
 
 
 class Level:
@@ -65,12 +65,13 @@ class Level:
         if self.event_type == 'DIE':
             
             game.shake_screen()
+            game.play_sound("die")
             game.game_over(["YOU WERE SLASHED", "INTO PIECES!"])
 
         elif self.event_type=='BLOOD':
             game.bg=pg.image.load(BGIMAGE+'%d_blood.png'%self.no).convert_alpha()
             self.event_type='DIE'
-            
+            game.play_sound("shake")
             game.shake_screen()
             game.fade()
             self.last_update = pg.time.get_ticks()
@@ -117,7 +118,7 @@ class Collectible(pg.sprite.Sprite):
         self.pos = pg.math.Vector2(collec[0]*w ,collec[1]*h)
         self.rect.topleft = self.pos
         self.type = collec[2]
-        self.sheet = Spritesheet('.venv\\title\Images\collectibles.png')
+        self.sheet = Spritesheet('.venv\\reaper mansion\Images\collectibles.png')
         self.load_image()
     
 

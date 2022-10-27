@@ -2,7 +2,7 @@ from settings import *
 from camera import Camera
 
 from spritesheet import Spritesheet
-player_sheet = Spritesheet(".venv\\title\Images\player.png")
+player_sheet = Spritesheet(".venv\\reaper mansion\Images\player.png")
 class Player(pg.sprite.Sprite):
     def __init__(self,game,x=1,y=4,speed=320,update_speed=100):
         super().__init__()
@@ -92,6 +92,7 @@ class Player(pg.sprite.Sprite):
                 if pg.Rect.colliderect(door.rect,self.rect):
                     if door.door in self.game.opened_doors:
                         self.game.textbox.active = True
+                        self.game.play_sound("door thud")
                         self.game.textbox.change_text("This door is permanently locked.")
                         self.game.textbox.last_update = pg.time.get_ticks()
                     elif not door.locked:
@@ -103,12 +104,14 @@ class Player(pg.sprite.Sprite):
                         self.game.opened_doors.append(door.door)
                     else:
                         self.game.textbox.active = True
+                        self.game.play_sound("door thud")
                         self.game.textbox.change_text("You need a key to open this door.")
                         self.game.textbox.last_update = pg.time.get_ticks()
         
 
         for collec in self.game.level.collectibles:
             if pg.Rect.colliderect(collec.rect,self.rect):
+                self.game.play_sound("key")
                 collec.effect(self.game)
                 collec.kill()
                 
@@ -117,15 +120,17 @@ class Player(pg.sprite.Sprite):
         
         
     def open_door(self,door):
+        self.game.play_sound("door")
         self.game.fade()
         self.game.new_level(door.to_level,door.to_cords)
+        
         self.kill()
     
 
     def die(self):
-        sheet = Spritesheet(".venv\\title\Images\player blood.png")
+        sheet = Spritesheet(".venv\\reaper mansion\Images\player blood.png")
         self.get_images(sheet)
-        
+        self.game.player_cords = (self.rect.x // PLAYER_SIZE[0],self.rect.y // PLAYER_SIZE[1])
         
         
                 

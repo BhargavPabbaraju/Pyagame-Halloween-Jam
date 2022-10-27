@@ -29,8 +29,6 @@ Stuff to draw
 
 Priorities:
 .Level Design
-.Title Screen
-.Sounds
 
 
 DONE STUFF

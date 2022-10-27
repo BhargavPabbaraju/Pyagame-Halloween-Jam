@@ -22,6 +22,8 @@ class Game:
         self.game_running = False
         self.over_running = False
         self.menu_running = True
+        self.persist_player_cords = False
+        self.player_cords = (0,0)
         
         
     
@@ -39,6 +41,10 @@ class Game:
             self.all_sprites.add(collec)
 
         cords = self.level.playercords if not cords else cords
+        if self.persist_player_cords:
+            cords = self.player_cords
+            self.persist_player_cords = False
+
         self.player = Player(self,*cords)
         
         self.player_sprite.add(self.player)
@@ -211,7 +217,7 @@ class Game:
 
     def run(self):
         
-
+        self.load_music('music 1')
         while self.game_running:
             self.dt = self.clock.tick(FPS)/1000
             for event in pg.event.get():
@@ -226,8 +232,28 @@ class Game:
             self.display_window()
             pg.display.update()
     
+
+    def load_music(self,music):
+        pg.mixer.music.load(MUSICPATH+music+'.wav')
+        pg.mixer.music.play(-1)
+    
+    def play_sound(self,music):
+        sound = pg.mixer.Sound(MUSICPATH+music+'.wav')
+        sound.play()
+
     def menu_loop(self):
+        
+        introbg = pg.image.load(INTROBG).convert_alpha()
+        font = pg.font.Font(FONTFILE,INTROFONTSIZE)
+        text = font.render("Reaper Mansion",True,(138,3,3))
+        rect = text.get_rect()
+        rect.center = self.screen.get_rect().center
+        rect.y = 16
+
+        self.screen.blit(introbg,(0,64+16))
+        self.screen.blit(text,rect)
         self.display_options(["PLAY","QUIT"])
+        self.load_music('music 3')
         while self.menu_running:
             for event in pg.event.get():
                 if event.type == pg.QUIT:

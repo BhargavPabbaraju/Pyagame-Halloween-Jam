@@ -86,10 +86,13 @@ class OptionText(pg.sprite.Sprite):
         elif self.option == 'PLAY AGAIN' or self.option == 'PLAY':
             self.game.over_running = False
             self.game.game_running = True
+            
             if self.option=='PLAY':
                 self.game.new_level()
             else:
+                self.game.persist_player_cords = True
                 self.game.new_level(self.game.level.no)
+                
             self.game.run()
         
         
