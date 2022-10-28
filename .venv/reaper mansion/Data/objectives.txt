@@ -1,0 +1,44 @@
+Day 1:
+    Brainstorm + Finalize game choice + plot
+
+Day 2:
+    Code mechanics with no graphics
+
+Day 3:
+    Start drawing graphics
+
+Day 6:
+    Create and embed Audio
+
+Day 7:
+    Build and deploy
+
+
+Setting 
+- Haunted Hotel
+- Hotel staff trying to figure out missing customers
+
+
+Stuff to draw
+-Mirror tiles
+-Table tiles
+-Plant tiles
+-Corpses
+-Skeletons
+-Portraits
+
+Priorities:
+.Level Design
+.Icon
+.Game Finish Music
+
+
+DONE STUFF
+.Player and Walk cycle
+.Floor and Wall tiles
+.Wall collisions 
+.Bathroom tiles
+.Smooth movement
+.Smooth Screen transition
+.Collectibles are collectable
+.Time Based Events
