@@ -1,6 +1,6 @@
 from settings import *
 from player import Player
-from text import Textbox,OptionText
+from text import Textbox,OptionText,CreditText
 from leveleditor import Level
 from math import sin,cos
 
@@ -14,6 +14,7 @@ class Game:
         self.fog = pg.Surface((WIDTH,HEIGHT),pg.SRCALPHA)
         self.debug = False
         self.window = pg.display.set_mode((WIDTH,HEIGHT))
+        
         self.clock = pg.time.Clock()
         
         self.fade_out = True
@@ -24,6 +25,7 @@ class Game:
         self.menu_running = True
         self.persist_player_cords = False
         self.player_cords = (0,0)
+        self.finish_running = False
         
         
     
@@ -43,8 +45,9 @@ class Game:
         cords = self.level.playercords if not cords else cords
         if self.persist_player_cords:
             cords = self.player_cords
-            self.persist_player_cords = False
+            
 
+    
         self.player = Player(self,*cords)
         
         self.player_sprite.add(self.player)
@@ -179,6 +182,8 @@ class Game:
                 else:
                     rect.y+=GAMEOVERFONTSIZE//n
                 
+
+                
                 surf.blit(text,rect)
         
         
@@ -193,6 +198,8 @@ class Game:
     def game_over_loop(self,msg):
         self.player.die()
         self.player_sprite.update()
+        self.textbox.active = False
+        self.textbox.update()
         self.draw_screen()
         pg.time.delay(200)
         
@@ -211,13 +218,12 @@ class Game:
             self.display_window()
             self.window.blit(surf,(0,0))
             self.options.update()
-            self.window.blit(pg.Surface((320*2,48*2)),(0,320*2-48*2))
             self.options.draw(self.window)
             pg.display.flip()
 
     def run(self):
         
-        self.load_music('music 1')
+        self.load_music('music 3')
         while self.game_running:
             self.dt = self.clock.tick(FPS)/1000
             for event in pg.event.get():
@@ -234,6 +240,7 @@ class Game:
     
 
     def load_music(self,music):
+        pg.mixer.music.stop()
         pg.mixer.music.load(MUSICPATH+music+'.wav')
         pg.mixer.music.play(-1)
     
@@ -248,12 +255,12 @@ class Game:
         text = font.render("Reaper Mansion",True,(138,3,3))
         rect = text.get_rect()
         rect.center = self.screen.get_rect().center
-        rect.y = 16
+        rect.y = 32
 
-        self.screen.blit(introbg,(0,64+16))
+        self.screen.blit(introbg,(0,64+16+8))
         self.screen.blit(text,rect)
         self.display_options(["PLAY","QUIT"])
-        self.load_music('music 3')
+        self.load_music('music 1')
         while self.menu_running:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
@@ -268,6 +275,85 @@ class Game:
             pg.display.flip()
 
 
+    def display_finish_message(self):
+        font = pg.font.Font(FONTFILE,GAMEOVERFONTSIZE)
+        surf = pg.Surface((WIDTH,HEIGHT),pg.SRCALPHA)
+        x=0
+        y=-GAMEOVERFONTSIZE
+        for i in ["CONGRATS!","YOU SUCCESSFULLY","ESCAPED!"]:
+            text = font.render(i,True,(255,255,255))
+            rect = text.get_rect()
+            rect.center = surf.get_rect().center
+            rect.y+=y
+            surf.blit(text,rect)
+            y+= GAMEOVERFONTSIZE
+        
+        
+        return surf
+    
+
+    def blitplayerart(self):
+        self.screen.fill(1)
+        art = pg.image.load(PLAYERART).convert_alpha()
+        rect = art.get_rect()
+        rect.y = HEIGHT//2 - rect.height
+        self.screen.blit(art,rect)
+        
+
+    def display_credits(self):
+        credits_running = True
+        self.blitplayerart()
+        font = pg.font.Font(FONTFILE,64)
+        text = font.render("Credits",True,(255,255,255))
+        rect = text.get_rect()
+        rect.center =self.screen.get_rect().center
+        rect.y = 0
+        self.screen.blit(text,rect)
+        credits = pg.sprite.Group()
+        offset = 0
+        for c in [["Font","Chris Vile"],["Art and Dev","Bhargav"],["Music","Google Song Maker"]]:
+            credit = CreditText(c[0],self,offset)
+            offset+=64
+            credits.add(credit)
+            credit = CreditText(c[1],self,offset)
+            offset+=96+32
+            credits.add(credit)
+
+        while credits_running:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    pg.quit()
+                    quit()
+
+            
+            self.display_window()
+            credits.update()
+            credits.draw(self.window)
+            pg.display.flip()
+
+    def finish_loop(self):
+        self.load_music('music 1')
+        self.finish_running = True
+        self.blitplayerart()
+        surf =self.display_finish_message()
+        last_update = pg.time.get_ticks()
+        thresh = 1700
+        while self.finish_running:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    pg.quit()
+                    quit()
+
+            
+            self.display_window()
+            self.window.blit(surf,(0,-100))
+            now = pg.time.get_ticks()
+            if now - last_update > thresh:
+                self.finish_running = False
+                self.display_credits()
+                last_update = now
+            
+            pg.display.flip()
 
 
 game = Game()

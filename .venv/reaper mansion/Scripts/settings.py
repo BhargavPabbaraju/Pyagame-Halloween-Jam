@@ -28,8 +28,15 @@ TEXTBOXIMG = '.venv\\reaper mansion\Images\\textbox.png'
 FONTFILE = '.venv\\reaper mansion\who asks satan.ttf'
 INTROBG = '.venv\\reaper mansion\Images\introbg.png'
 MUSICPATH = '.venv\\reaper mansion\Audio\\'
+PLAYERART = '.venv\\reaper mansion\Images\\player art.png'
+
+
+FINALLEVEL = 6
 
 
 pg.display.set_mode((WIDTH,HEIGHT))
+icon = pg.image.load('.venv\\reaper mansion\Images\\icon.png')
+pg.display.set_icon(icon)
+pg.display.set_caption("Reaper Mansion")
 pg.init()
 clock = pg.time.Clock()

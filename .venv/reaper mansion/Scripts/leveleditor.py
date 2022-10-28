@@ -34,6 +34,7 @@ class Level:
                     self.playercords = eval(lines[n])
                 elif n==3:#Walls cordinates
                     walls = eval(lines[n])
+                    self.walls_list = walls
                     for wall in walls:
                         w = Wall(wall)
                         self.walls.add(w)
@@ -66,7 +67,9 @@ class Level:
             
             game.shake_screen()
             game.play_sound("die")
+            game.load_music("music 2")
             game.game_over(["YOU WERE SLASHED", "INTO PIECES!"])
+            
 
         elif self.event_type=='BLOOD':
             game.bg=pg.image.load(BGIMAGE+'%d_blood.png'%self.no).convert_alpha()
@@ -76,7 +79,7 @@ class Level:
             game.fade()
             self.last_update = pg.time.get_ticks()
             self.threshold = 1000 * randint(self.min_thres,self.max_thres)
-        
+           
 
         
                    

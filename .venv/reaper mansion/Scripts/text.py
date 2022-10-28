@@ -96,4 +96,44 @@ class OptionText(pg.sprite.Sprite):
             self.game.run()
         
         
+
+class CreditText(pg.sprite.Sprite):
+    def __init__(self,msg,game,offset=0):
+        super().__init__()
+        self.msg = msg
+        self.game = game
+        self.offset = offset
+        self.lerp_speed = 0.1
+        self.make_image()
+        self.last_update = pg.time.get_ticks()
+        self.thresh = 10
         
+        
+        
+    
+    def make_image(self):
+        font = pg.font.Font(FONTFILE,OPTIONSFONTSIZE)
+        text = font.render(self.msg,True,(255,255,255))
+        rect = text.get_rect()
+        rect.center = self.game.window.get_rect().center
+        self.image = text
+        self.rect = rect
+        self.pos = pg.math.Vector2(rect.x,HEIGHT+rect.height+self.offset)
+        self.target = self.offset  + 64 + 64
+        self.rect.topleft = self.pos
+        self.active = True
+    
+
+    def update(self):
+        if not self.active:
+            return
+        now = pg.time.get_ticks()
+        if now - self.last_update > self.thresh:
+            self.rect.y-=10*self.game.dt
+            self.last_update = now
+        
+        if self.rect.y<self.target:
+            self.active = False
+
+
+

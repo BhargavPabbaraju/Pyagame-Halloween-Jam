@@ -29,6 +29,8 @@ Stuff to draw
 
 Priorities:
 .Level Design
+.Icon
+.Game Finish Music
 
 
 DONE STUFF

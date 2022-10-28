@@ -10,8 +10,12 @@ class Player(pg.sprite.Sprite):
 
         self.image = self.images['D'][0]
         self.rect = self.image.get_rect()
-        x*=PLAYER_SIZE[0]
-        y*=PLAYER_SIZE[1]
+        self.game = game
+        if not self.game.persist_player_cords:
+            x*=PLAYER_SIZE[0]
+            y*=PLAYER_SIZE[0]
+        else:
+            self.game.persist_player_cords = False
         self.pos = pg.math.Vector2(x,y)
         self.rect.topleft =self.pos
         self.speed = speed
@@ -20,7 +24,7 @@ class Player(pg.sprite.Sprite):
         self.camera = Camera()
         self.camera.pos = pg.math.Vector2(self.rect.center)
         self.camera.rect.center = self.rect.center
-        self.game = game
+        
         self.game.camera.add(self.camera)
         self.turn = 0
         
@@ -122,7 +126,11 @@ class Player(pg.sprite.Sprite):
     def open_door(self,door):
         self.game.play_sound("door")
         self.game.fade()
-        self.game.new_level(door.to_level,door.to_cords)
+        if door.to_level == FINALLEVEL:
+           self.game.finish_loop()
+
+        else:
+            self.game.new_level(door.to_level,door.to_cords)
         
         self.kill()
     
@@ -130,8 +138,7 @@ class Player(pg.sprite.Sprite):
     def die(self):
         sheet = Spritesheet(".venv\\reaper mansion\Images\player blood.png")
         self.get_images(sheet)
-        self.game.player_cords = (self.rect.x // PLAYER_SIZE[0],self.rect.y // PLAYER_SIZE[1])
-        
+        self.game.player_cords = self.rect.x,self.rect.y
         
                 
                 
